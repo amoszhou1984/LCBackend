@@ -1,0 +1,8 @@
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\LiangchenServer.dll
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\LiangchenServer.pdb
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\EntityFramework.dll
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\Newtonsoft.Json.dll
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\EntityFramework.xml
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\Newtonsoft.Json.xml
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\obj\Debug\LiangchenServer.dll
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\obj\Debug\LiangchenServer.pdb

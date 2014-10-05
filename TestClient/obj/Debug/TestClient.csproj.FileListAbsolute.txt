@@ -1,0 +1,7 @@
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\bin\Debug\TestClient.exe.config
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\bin\Debug\TestClient.exe
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\bin\Debug\TestClient.pdb
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\obj\Debug\TestClient.exe
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\obj\Debug\TestClient.pdb
+C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\TestClient\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
