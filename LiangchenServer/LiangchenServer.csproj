@@ -180,6 +180,7 @@
       <DependentUpon>LCDB.edmx</DependentUpon>
       <LastGenOutput>LCDB.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\LiangchenServer.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

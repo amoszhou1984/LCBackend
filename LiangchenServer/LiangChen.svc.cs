@@ -73,7 +73,7 @@ namespace LiangchenServer
             {
                 user = authDbEntities.Users.FirstOrDefault(u => u.Email == userModel.email);
 
-                if (user == null) return "The email address has been used.";
+                if (user != null) return "The email address has been used.";
 
                 // Create new user
                 User newUser = new User()

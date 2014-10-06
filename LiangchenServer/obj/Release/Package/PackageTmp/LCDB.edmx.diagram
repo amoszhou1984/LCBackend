@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b2fe8fac1f834121a2b26196bb5ebb91" Name="Diagram1">
+        <EntityTypeShape EntityType="LCDB2Model.LCAddress" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCCountry" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCEvent" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCEventCreation" Width="1.5" PointX="9.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCParticipation" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCStateProvince" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LCDB2Model.LCUser" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="LCDB2Model.FK_LCAddress_LCStateProvince" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCEvent_LCAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCStateProvince_LCCountry" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCEventCreation_LCEvent" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCParticipation_LCEvent" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCEventCreation_LCUser" ManuallyRouted="false" />
+        <AssociationConnector Association="LCDB2Model.FK_LCParticipation_LCUser" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

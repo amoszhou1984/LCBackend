@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LCDB2Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="LCDB2Entities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="LCAddresses" EntityType="LCDB2Model.LCAddress" />
+    <EntitySet Name="LCCountries" EntityType="LCDB2Model.LCCountry" />
+    <EntitySet Name="LCEvents" EntityType="LCDB2Model.LCEvent" />
+    <EntitySet Name="LCEventCreations" EntityType="LCDB2Model.LCEventCreation" />
+    <EntitySet Name="LCParticipations" EntityType="LCDB2Model.LCParticipation" />
+    <EntitySet Name="LCStateProvinces" EntityType="LCDB2Model.LCStateProvince" />
+    <EntitySet Name="LCUsers" EntityType="LCDB2Model.LCUser" />
+    <AssociationSet Name="FK_LCAddress_LCStateProvince" Association="LCDB2Model.FK_LCAddress_LCStateProvince">
+      <End Role="LCStateProvince" EntitySet="LCStateProvinces" />
+      <End Role="LCAddress" EntitySet="LCAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCEvent_LCAddress" Association="LCDB2Model.FK_LCEvent_LCAddress">
+      <End Role="LCAddress" EntitySet="LCAddresses" />
+      <End Role="LCEvent" EntitySet="LCEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCStateProvince_LCCountry" Association="LCDB2Model.FK_LCStateProvince_LCCountry">
+      <End Role="LCCountry" EntitySet="LCCountries" />
+      <End Role="LCStateProvince" EntitySet="LCStateProvinces" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCEventCreation_LCEvent" Association="LCDB2Model.FK_LCEventCreation_LCEvent">
+      <End Role="LCEvent" EntitySet="LCEvents" />
+      <End Role="LCEventCreation" EntitySet="LCEventCreations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCParticipation_LCEvent" Association="LCDB2Model.FK_LCParticipation_LCEvent">
+      <End Role="LCEvent" EntitySet="LCEvents" />
+      <End Role="LCParticipation" EntitySet="LCParticipations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCEventCreation_LCUser" Association="LCDB2Model.FK_LCEventCreation_LCUser">
+      <End Role="LCUser" EntitySet="LCUsers" />
+      <End Role="LCEventCreation" EntitySet="LCEventCreations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LCParticipation_LCUser" Association="LCDB2Model.FK_LCParticipation_LCUser">
+      <End Role="LCUser" EntitySet="LCUsers" />
+      <End Role="LCParticipation" EntitySet="LCParticipations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LCAddress">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
+    <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="SpatialGeolocation" Type="Geography" />
+    <NavigationProperty Name="LCStateProvince" Relationship="LCDB2Model.FK_LCAddress_LCStateProvince" FromRole="LCAddress" ToRole="LCStateProvince" />
+    <NavigationProperty Name="LCEvents" Relationship="LCDB2Model.FK_LCEvent_LCAddress" FromRole="LCAddress" ToRole="LCEvent" />
+  </EntityType>
+  <EntityType Name="LCCountry">
+    <Key>
+      <PropertyRef Name="CountryRegionCode" />
+    </Key>
+    <Property Name="CountryRegionCode" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="LCStateProvinces" Relationship="LCDB2Model.FK_LCStateProvince_LCCountry" FromRole="LCCountry" ToRole="LCStateProvince" />
+  </EntityType>
+  <EntityType Name="LCEvent">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TimeSlots" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="AddressID" Type="Int32" />
+    <NavigationProperty Name="LCAddress" Relationship="LCDB2Model.FK_LCEvent_LCAddress" FromRole="LCEvent" ToRole="LCAddress" />
+    <NavigationProperty Name="LCEventCreations" Relationship="LCDB2Model.FK_LCEventCreation_LCEvent" FromRole="LCEvent" ToRole="LCEventCreation" />
+    <NavigationProperty Name="LCParticipations" Relationship="LCDB2Model.FK_LCParticipation_LCEvent" FromRole="LCEvent" ToRole="LCParticipation" />
+  </EntityType>
+  <EntityType Name="LCEventCreation">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="LCEvent" Relationship="LCDB2Model.FK_LCEventCreation_LCEvent" FromRole="LCEventCreation" ToRole="LCEvent" />
+    <NavigationProperty Name="LCUser" Relationship="LCDB2Model.FK_LCEventCreation_LCUser" FromRole="LCEventCreation" ToRole="LCUser" />
+  </EntityType>
+  <EntityType Name="LCParticipation">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="CanEdit" Type="Boolean" />
+    <Property Name="CanInvite" Type="Boolean" />
+    <Property Name="Vote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="LCEvent" Relationship="LCDB2Model.FK_LCParticipation_LCEvent" FromRole="LCParticipation" ToRole="LCEvent" />
+    <NavigationProperty Name="LCUser" Relationship="LCDB2Model.FK_LCParticipation_LCUser" FromRole="LCParticipation" ToRole="LCUser" />
+  </EntityType>
+  <EntityType Name="LCStateProvince">
+    <Key>
+      <PropertyRef Name="StateProvinceID" />
+    </Key>
+    <Property Name="StateProvinceID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="StateProvinceCode" Type="String" Nullable="false" MaxLength="3" Unicode="true" FixedLength="true" />
+    <Property Name="CountryRegionCode" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
+    <Property Name="StateProvinceName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="LCAddresses" Relationship="LCDB2Model.FK_LCAddress_LCStateProvince" FromRole="LCStateProvince" ToRole="LCAddress" />
+    <NavigationProperty Name="LCCountry" Relationship="LCDB2Model.FK_LCStateProvince_LCCountry" FromRole="LCStateProvince" ToRole="LCCountry" />
+  </EntityType>
+  <EntityType Name="LCUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Enabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="LCEventCreations" Relationship="LCDB2Model.FK_LCEventCreation_LCUser" FromRole="LCUser" ToRole="LCEventCreation" />
+    <NavigationProperty Name="LCParticipations" Relationship="LCDB2Model.FK_LCParticipation_LCUser" FromRole="LCUser" ToRole="LCParticipation" />
+  </EntityType>
+  <Association Name="FK_LCAddress_LCStateProvince">
+    <End Role="LCStateProvince" Type="LCDB2Model.LCStateProvince" Multiplicity="1" />
+    <End Role="LCAddress" Type="LCDB2Model.LCAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCStateProvince">
+        <PropertyRef Name="StateProvinceID" />
+      </Principal>
+      <Dependent Role="LCAddress">
+        <PropertyRef Name="StateProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCEvent_LCAddress">
+    <End Role="LCAddress" Type="LCDB2Model.LCAddress" Multiplicity="0..1" />
+    <End Role="LCEvent" Type="LCDB2Model.LCEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCAddress">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="LCEvent">
+        <PropertyRef Name="AddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCStateProvince_LCCountry">
+    <End Role="LCCountry" Type="LCDB2Model.LCCountry" Multiplicity="1" />
+    <End Role="LCStateProvince" Type="LCDB2Model.LCStateProvince" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCCountry">
+        <PropertyRef Name="CountryRegionCode" />
+      </Principal>
+      <Dependent Role="LCStateProvince">
+        <PropertyRef Name="CountryRegionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCEventCreation_LCEvent">
+    <End Role="LCEvent" Type="LCDB2Model.LCEvent" Multiplicity="1" />
+    <End Role="LCEventCreation" Type="LCDB2Model.LCEventCreation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCEvent">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="LCEventCreation">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCParticipation_LCEvent">
+    <End Role="LCEvent" Type="LCDB2Model.LCEvent" Multiplicity="1" />
+    <End Role="LCParticipation" Type="LCDB2Model.LCParticipation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCEvent">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="LCParticipation">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCEventCreation_LCUser">
+    <End Role="LCUser" Type="LCDB2Model.LCUser" Multiplicity="1" />
+    <End Role="LCEventCreation" Type="LCDB2Model.LCEventCreation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LCEventCreation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LCParticipation_LCUser">
+    <End Role="LCUser" Type="LCDB2Model.LCUser" Multiplicity="1" />
+    <End Role="LCParticipation" Type="LCDB2Model.LCParticipation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LCUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LCParticipation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

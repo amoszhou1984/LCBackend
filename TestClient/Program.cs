@@ -12,7 +12,14 @@ namespace TestClient
 {
     public class Program
     {
-        public static LoginModel loginModel = new LoginModel() { username = "amoszhou@gmail.com", password = "Pa55w0rd" };
+        public static UserModel loginModel = new UserModel() { username = "amoszhou@gmail.com", password = "Pa55w0rd" };
+        public static UserModel RegModel = new UserModel()
+        {
+            email = "yangyuanpig@gmail.com",
+            password = "1mApig",
+            username = "Yang Yuan Pig",
+            enabled = "true"
+        };
         public static EventModel eventModel = new EventModel()
         {
             TimeSlot = "",
@@ -43,16 +50,36 @@ namespace TestClient
 
         public static EventModel eventModelDel = new EventModel()
         {
-            EventId = 4        
+            EventId = 4
         };
 
         static int Main(string[] args)
         {
-            //string retVal = SendCreatEventRequest("http://localhost:2099/LiangChen.svc/Event/Create", "Post request content");
+            string retVal = SendJoinRequest("http://localhost:2099/LiangChen.svc/Join", "Post request content");
             //string retVal = SendEventEditRequest("http://localhost:2099/LiangChen.svc/Event/Detail", "Post request content");
-            string retVal = SendEventEditRequest("http://localhost:2099/LiangChen.svc/Event/Delete", "Post request content");
+            //string retVal = SendEventEditRequest("http://localhost:2099/LiangChen.svc/Event/Delete", "Post request content");
+
             Console.WriteLine(retVal);
             return 0;
+        }
+
+        private static string SendJoinRequest(string URI, string Parameters)
+        {
+            System.Net.WebRequest req = System.Net.WebRequest.Create(URI);
+            //req.Proxy = new System.Net.WebProxy(ProxyString, true);
+            //Add these, as we're doing a POST
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+            Parameters = JsonConvert.SerializeObject(RegModel);
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length); //Push it out there
+            os.Close();
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
         }
 
         public static string SendCreatEventRequest(string URI, string Parameters)
