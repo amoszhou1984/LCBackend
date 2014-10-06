@@ -6,3 +6,4 @@ C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenSer
 C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\bin\Newtonsoft.Json.xml
 C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\obj\Debug\LiangchenServer.dll
 C:\Users\Amos\Documents\Visual Studio 2012\Projects\LiangchenServer\LiangchenServer\obj\Debug\LiangchenServer.pdb
+C:\Users\Amos\documents\visual studio 2012\Projects\LiangchenServer\LiangchenServer\obj\Debug\LiangchenServer.csprojResolveAssemblyReference.cache

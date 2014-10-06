@@ -26,11 +26,31 @@ namespace TestClient
             StateProvinceCode = "VIC",
             CountryRegionCode = "AUS"
         };
+        public static EventModel eventModelNew = new EventModel()
+        {
+            EventId = 4,
+            TimeSlot = "",
+            Title = "Amos's Test Updated",
+            Description = "Test update of an event",
+            AddressLine1 = "19 Pacific Hwy",
+            AddressLine2 = "",
+            City = "Sydney",
+            PostCode = "4122",
+            GeoString = null,
+            StateProvinceCode = "NSW",
+            CountryRegionCode = "AUS"
+        };
+
+        public static EventModel eventModelDel = new EventModel()
+        {
+            EventId = 4        
+        };
 
         static int Main(string[] args)
         {
             //string retVal = SendCreatEventRequest("http://localhost:2099/LiangChen.svc/Event/Create", "Post request content");
-            string retVal = SendEventDetailRequest("http://localhost:2099/LiangChen.svc/Event/Detail", "Post request content");
+            //string retVal = SendEventEditRequest("http://localhost:2099/LiangChen.svc/Event/Detail", "Post request content");
+            string retVal = SendEventEditRequest("http://localhost:2099/LiangChen.svc/Event/Delete", "Post request content");
             Console.WriteLine(retVal);
             return 0;
         }
@@ -46,7 +66,7 @@ namespace TestClient
             LCPostModel postModel = new LCPostModel();
             postModel.Email = "amoszhou@gmail.com";
             postModel.AccessToken = "fakedtoken";
-            postModel.ContentData = JsonConvert.SerializeObject(eventModel);
+            postModel.ContentData = JsonConvert.SerializeObject(eventModelDel);
             Parameters = JsonConvert.SerializeObject(postModel);
             byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
             req.ContentLength = bytes.Length;
@@ -112,6 +132,52 @@ namespace TestClient
             detailReq.AccessToken = "fakedtoken";
             detailReq.ContentData = JsonConvert.SerializeObject(1);
             Parameters = JsonConvert.SerializeObject(detailReq);
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length); //Push it out there
+            os.Close();
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
+        }
+
+        public static string SendEventEditRequest(string URI, string Parameters)
+        {
+            System.Net.WebRequest req = System.Net.WebRequest.Create(URI);
+            //req.Proxy = new System.Net.WebProxy(ProxyString, true);
+            //Add these, as we're doing a POST
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+            LCPostModel eventEditRequest = new LCPostModel();
+            eventEditRequest.Email = "amoszhou@gmail.com";
+            eventEditRequest.AccessToken = "fakedtoken";
+            eventEditRequest.ContentData = JsonConvert.SerializeObject(eventModelDel);
+            Parameters = JsonConvert.SerializeObject(eventEditRequest);
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length); //Push it out there
+            os.Close();
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
+        }
+
+        public static string SendEventDelRequest(string URI, string Parameters)
+        {
+            System.Net.WebRequest req = System.Net.WebRequest.Create(URI);
+            //req.Proxy = new System.Net.WebProxy(ProxyString, true);
+            //Add these, as we're doing a POST
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+            LCPostModel eventEditRequest = new LCPostModel();
+            eventEditRequest.Email = "amoszhou@gmail.com";
+            eventEditRequest.AccessToken = "fakedtoken";
+            eventEditRequest.ContentData = JsonConvert.SerializeObject(eventModelDel);
+            Parameters = JsonConvert.SerializeObject(eventEditRequest);
             byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();

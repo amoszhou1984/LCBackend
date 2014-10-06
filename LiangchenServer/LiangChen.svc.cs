@@ -75,6 +75,7 @@ namespace LiangchenServer
                 LCStateProvince stateProvince =
                     dbEntities.LCStateProvinces.FirstOrDefault(p => p.StateProvinceCode == anEvent.StateProvinceCode
                         && p.CountryRegionCode == anEvent.CountryRegionCode);
+                if (stateProvince == null) return false;
                 LCAddress addressToAdd = new LCAddress()
                 {
                     AddressLine1 = anEvent.AddressLine1,
@@ -86,6 +87,7 @@ namespace LiangchenServer
                 };
                 dbEntities.LCAddresses.Add(addressToAdd);
                 dbEntities.SaveChanges(); //TODO Address should be checked before being added
+
                 // Add the event
                 LCEvent eventToAdd = new LCEvent()
                 {
@@ -96,9 +98,11 @@ namespace LiangchenServer
                 };
                 dbEntities.LCEvents.Add(eventToAdd);
                 dbEntities.SaveChanges();
+
                 // Link the creator to the event
                 //We've checked this user is in the authdb, thereofore should also be in the transactional db
-                LCUser creator = dbEntities.LCUsers.FirstOrDefault(u => u.Email == postDataModel.Email);
+                var creator = dbEntities.LCUsers.FirstOrDefault(u => u.Email == postDataModel.Email);
+                if (creator == null) return false;
                 LCEventCreation creation = new LCEventCreation()
                 {
                     EventId = eventToAdd.EventId,
@@ -137,10 +141,7 @@ namespace LiangchenServer
                 using (dbEntities)
                 {
                     var creations = dbEntities.LCEventCreations.Where(c => c.LCUser.Email == postDataModel.Email);
-                    foreach (var creation in creations)
-                    {
-                        eventIds.Add(creation.EventId);
-                    }
+                    eventIds.AddRange(creations.Select(creation => creation.EventId));
                     return JsonConvert.SerializeObject(eventIds);
                 }
             }
@@ -156,7 +157,9 @@ namespace LiangchenServer
             {
                 int eventId = JsonConvert.DeserializeObject<int>(postDataModel.ContentData);
                 LCEvent theEvent = dbEntities.LCEvents.FirstOrDefault(e => e.EventId == eventId);
+                if (theEvent == null) return null;
                 LCAddress address = theEvent.LCAddress;
+
                 var eventDetails = new
                 {
                     Title = theEvent.Title,
@@ -185,6 +188,8 @@ namespace LiangchenServer
                 EventModel anEvent = JsonConvert.DeserializeObject<EventModel>(postDataModel.ContentData);
                 // Check whether the event exists
                 LCEvent eventToUpdate = dbEntities.LCEvents.FirstOrDefault(e => e.EventId == anEvent.EventId);
+                LCStateProvince stateProvince = dbEntities.LCStateProvinces.FirstOrDefault(p => p.StateProvinceCode == anEvent.StateProvinceCode
+                    && p.CountryRegionCode == anEvent.CountryRegionCode); // Find the stateProvince instance matching the codes
                 if (eventToUpdate == null) return false;
                 eventToUpdate.Title = anEvent.Title;
                 eventToUpdate.Description = anEvent.Description;
@@ -194,16 +199,39 @@ namespace LiangchenServer
                     eventToUpdate.LCAddress.AddressLine2 = anEvent.AddressLine2;
                     eventToUpdate.LCAddress.City = anEvent.City;
                     eventToUpdate.LCAddress.PostalCode = anEvent.PostCode;
-                    //TODO Need to complete the update
+                    eventToUpdate.LCAddress.LCStateProvince = stateProvince;
                 }
                 dbEntities.SaveChanges();
             }
-            return false;
+            return true;
         }
 
         public bool DeleteEvent(Stream eventData)
         {
-            throw new NotImplementedException();
+            // First validate the user priviledges
+            var reader = new StreamReader(eventData);
+            string content = reader.ReadToEnd();
+            LCPostModel postDataModel = JsonConvert.DeserializeObject<LCPostModel>(content);
+            if (validateUser(postDataModel) == false) return false;
+            using (dbEntities)
+            {
+                // Unpack the Event
+                EventModel anEvent = JsonConvert.DeserializeObject<EventModel>(postDataModel.ContentData);
+                // Check whether the event exists
+                LCEvent eventToDelete = dbEntities.LCEvents.FirstOrDefault(e => e.EventId == anEvent.EventId);
+                if (eventToDelete == null) return false;
+                foreach (var creation in dbEntities.LCEventCreations.Where(creation => creation.EventId == eventToDelete.EventId))
+                {
+                    dbEntities.LCEventCreations.Remove(creation);
+                }
+                foreach (var participation in dbEntities.LCParticipations.Where(participation => participation.LCEventId == eventToDelete.EventId))
+                {
+                    dbEntities.LCParticipations.Remove(participation);
+                }
+                dbEntities.LCEvents.Remove(eventToDelete);
+                dbEntities.SaveChanges();
+            }
+            return true;
         }
 
         public bool AddParticipant(Stream participantData)
