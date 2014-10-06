@@ -5,9 +5,11 @@ using System.Web;
 
 namespace LiangchenServer
 {
-    public class LoginModel
+    public class UserModel
     {
-        public string username { get; set; }
+        public string email { get; set; }
         public string password { get; set; }
+        public string username { get; set; }
+        public string enabled { get; set; }
     }
 }

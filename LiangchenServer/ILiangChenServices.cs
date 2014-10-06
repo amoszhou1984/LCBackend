@@ -24,6 +24,10 @@ namespace LiangchenServer
         [WebInvoke(Method = "POST", UriTemplate = "Login")]
         bool Login(Stream data);
 
+        [OperationContract(Name = "Join")]
+        [WebInvoke(Method = "POST", UriTemplate = "Join")]
+        bool Join(Stream data);
+
         [OperationContract(Name = "CreateEvent")]
         [WebInvoke(Method = "POST", UriTemplate = "Event/Create")]
         bool CreateEvent(Stream eventData);

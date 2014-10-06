@@ -132,7 +132,7 @@
       <DependentUpon>LiangChen.svc</DependentUpon>
     </Compile>
     <Compile Include="ILiangChenServices.cs" />
-    <Compile Include="LoginModel.cs" />
+    <Compile Include="UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs">
       <DependentUpon>LCAuth.tt</DependentUpon>

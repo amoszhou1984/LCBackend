@@ -28,15 +28,15 @@ namespace LiangchenServer
             // convert Stream Data to StreamReader
             var reader = new StreamReader(loginData);
             string content = reader.ReadToEnd();
-            LoginModel loginModel = JsonConvert.DeserializeObject<LoginModel>(content);
+            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(content);
 
             using (authDbEntities)
             {
                 // Find the user from the AuthDB
-                string name = loginModel.username;
+                string name = userModel.email;
                 User user = authDbEntities.Users.FirstOrDefault(u => u.Email == name);
                 if (user == null) return false;
-                if (user.Password != loginModel.password)
+                if (user.Password != userModel.password)
                 {
                     return false;
                 }
@@ -58,6 +58,45 @@ namespace LiangchenServer
                 }
 
             }
+        }
+
+        public string Join(Stream data)
+        {
+            // convert Stream Data to StreamReader
+            var reader = new StreamReader(data);
+            string content = reader.ReadToEnd();
+            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(content);
+
+            // Check if the user email already exists
+            User user = null;
+            using (authDbEntities)
+            {
+                user = authDbEntities.Users.FirstOrDefault(u => u.Email == userModel.email);
+
+                if (user == null) return "The email address has been used.";
+
+                // Create new user
+                User newUser = new User()
+                {
+                    Email = userModel.email,
+                    Password = userModel.password
+                };
+
+                authDbEntities.Users.Add(newUser);
+                authDbEntities.SaveChanges();
+            }
+            using (dbEntities)
+            {
+                LCUser newLCUser = new LCUser()
+                {
+                    Email = userModel.email,
+                    UserName = userModel.username,
+                    Enabled = true
+                };
+                dbEntities.LCUsers.Add(newLCUser);
+                dbEntities.SaveChanges();
+            }
+            return "Registration Successful!";
         }
 
         public bool CreateEvent(Stream eventData)
