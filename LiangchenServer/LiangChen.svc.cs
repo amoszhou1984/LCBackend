@@ -145,7 +145,7 @@ namespace LiangchenServer
                 LCEventCreation creation = new LCEventCreation()
                 {
                     EventId = eventToAdd.EventId,
-                    UserId = creator.LCUserId,
+                    UserId = creator.UserId,
                     CreationTime = DateTime.Now
                 };
                 dbEntities.LCEventCreations.Add(creation);
@@ -263,7 +263,7 @@ namespace LiangchenServer
                 {
                     dbEntities.LCEventCreations.Remove(creation);
                 }
-                foreach (var participation in dbEntities.LCParticipations.Where(participation => participation.LCEventId == eventToDelete.EventId))
+                foreach (var participation in dbEntities.LCParticipations.Where(participation => participation.EventId == eventToDelete.EventId))
                 {
                     dbEntities.LCParticipations.Remove(participation);
                 }

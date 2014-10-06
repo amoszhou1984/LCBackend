@@ -137,9 +137,6 @@
     <Compile Include="Session.cs">
       <DependentUpon>LCAuth.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>LCAuth.tt</DependentUpon>
     </Compile>
@@ -149,23 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <EntityDeploy Include="LCDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LCDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="LCDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCDB.edmx</DependentUpon>
-      <LastGenOutput>LCDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="LCDB.edmx.diagram">
-      <DependentUpon>LCDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="LCDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCDB.edmx</DependentUpon>
-      <LastGenOutput>LCDB.cs</LastGenOutput>
-    </Content>
     <EntityDeploy Include="LCAuth.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LCAuth.Designer.cs</LastGenOutput>
@@ -182,6 +162,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LCAuth.edmx</DependentUpon>
       <LastGenOutput>LCAuth.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="LCDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LCDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="LCDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LCDB.edmx</DependentUpon>
+      <LastGenOutput>LCDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="LCDB.edmx.diagram">
+      <DependentUpon>LCDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="LCDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LCDB.edmx</DependentUpon>
+      <LastGenOutput>LCDB.cs</LastGenOutput>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

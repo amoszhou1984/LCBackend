@@ -8,7 +8,6 @@
     <EntitySet Name="LCParticipations" EntityType="LCDB2Model.LCParticipation" />
     <EntitySet Name="LCStateProvinces" EntityType="LCDB2Model.LCStateProvince" />
     <EntitySet Name="LCUsers" EntityType="LCDB2Model.LCUser" />
-    <EntitySet Name="sysdiagrams" EntityType="LCDB2Model.sysdiagram" />
     <AssociationSet Name="FK_LCAddress_LCStateProvince" Association="LCDB2Model.FK_LCAddress_LCStateProvince">
       <End Role="LCStateProvince" EntitySet="LCStateProvinces" />
       <End Role="LCAddress" EntitySet="LCAddresses" />
@@ -86,11 +85,11 @@
   </EntityType>
   <EntityType Name="LCParticipation">
     <Key>
-      <PropertyRef Name="LCUserId" />
-      <PropertyRef Name="LCEventId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="EventId" />
     </Key>
-    <Property Name="LCUserId" Type="Int32" Nullable="false" />
-    <Property Name="LCEventId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
     <Property Name="CanEdit" Type="Boolean" />
     <Property Name="CanInvite" Type="Boolean" />
     <Property Name="Vote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -110,24 +109,14 @@
   </EntityType>
   <EntityType Name="LCUser">
     <Key>
-      <PropertyRef Name="LCUserId" />
+      <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="LCUserId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Enabled" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="LCEventCreations" Relationship="LCDB2Model.FK_LCEventCreation_LCUser" FromRole="LCUser" ToRole="LCEventCreation" />
     <NavigationProperty Name="LCParticipations" Relationship="LCDB2Model.FK_LCParticipation_LCUser" FromRole="LCUser" ToRole="LCParticipation" />
-  </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <Association Name="FK_LCAddress_LCStateProvince">
     <End Role="LCStateProvince" Type="LCDB2Model.LCStateProvince" Multiplicity="1" />
@@ -185,7 +174,7 @@
         <PropertyRef Name="EventId" />
       </Principal>
       <Dependent Role="LCParticipation">
-        <PropertyRef Name="LCEventId" />
+        <PropertyRef Name="EventId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -194,7 +183,7 @@
     <End Role="LCEventCreation" Type="LCDB2Model.LCEventCreation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LCUser">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="LCEventCreation">
         <PropertyRef Name="UserId" />
@@ -206,10 +195,10 @@
     <End Role="LCParticipation" Type="LCDB2Model.LCParticipation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LCUser">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="LCParticipation">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

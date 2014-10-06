@@ -8,7 +8,6 @@
     <EntitySet Name="LCParticipation" EntityType="LCDB2Model.Store.LCParticipation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LCStateProvince" EntityType="LCDB2Model.Store.LCStateProvince" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LCUser" EntityType="LCDB2Model.Store.LCUser" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="sysdiagrams" EntityType="LCDB2Model.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LCAddress_LCStateProvince" Association="LCDB2Model.Store.FK_LCAddress_LCStateProvince">
       <End Role="LCStateProvince" EntitySet="LCStateProvince" />
       <End Role="LCAddress" EntitySet="LCAddress" />
@@ -78,11 +77,11 @@
   </EntityType>
   <EntityType Name="LCParticipation">
     <Key>
-      <PropertyRef Name="LCUserId" />
-      <PropertyRef Name="LCEventId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="EventId" />
     </Key>
-    <Property Name="LCUserId" Type="int" Nullable="false" />
-    <Property Name="LCEventId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="CanEdit" Type="bit" />
     <Property Name="CanInvite" Type="bit" />
     <Property Name="Vote" Type="nvarchar(max)" />
@@ -98,22 +97,12 @@
   </EntityType>
   <EntityType Name="LCUser">
     <Key>
-      <PropertyRef Name="LCUserId" />
+      <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="LCUserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" />
     <Property Name="Enabled" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <Association Name="FK_LCAddress_LCStateProvince">
     <End Role="LCStateProvince" Type="LCDB2Model.Store.LCStateProvince" Multiplicity="1" />
@@ -156,7 +145,7 @@
     <End Role="LCEventCreation" Type="LCDB2Model.Store.LCEventCreation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LCUser">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="LCEventCreation">
         <PropertyRef Name="UserId" />
@@ -171,7 +160,7 @@
         <PropertyRef Name="EventId" />
       </Principal>
       <Dependent Role="LCParticipation">
-        <PropertyRef Name="LCEventId" />
+        <PropertyRef Name="EventId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -180,10 +169,10 @@
     <End Role="LCParticipation" Type="LCDB2Model.Store.LCParticipation" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LCUser">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="LCParticipation">
-        <PropertyRef Name="LCUserId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

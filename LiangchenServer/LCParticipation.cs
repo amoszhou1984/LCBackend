@@ -14,8 +14,8 @@ namespace LiangchenServer
     
     public partial class LCParticipation
     {
-        public int LCUserId { get; set; }
-        public int LCEventId { get; set; }
+        public int UserId { get; set; }
+        public int EventId { get; set; }
         public Nullable<bool> CanEdit { get; set; }
         public Nullable<bool> CanInvite { get; set; }
         public string Vote { get; set; }

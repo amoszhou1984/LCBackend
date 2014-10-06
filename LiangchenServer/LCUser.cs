@@ -20,7 +20,7 @@ namespace LiangchenServer
             this.LCParticipations = new HashSet<LCParticipation>();
         }
     
-        public int LCUserId { get; set; }
+        public int UserId { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
         public bool Enabled { get; set; }

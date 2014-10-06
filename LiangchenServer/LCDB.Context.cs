@@ -32,6 +32,5 @@ namespace LiangchenServer
         public DbSet<LCParticipation> LCParticipations { get; set; }
         public DbSet<LCStateProvince> LCStateProvinces { get; set; }
         public DbSet<LCUser> LCUsers { get; set; }
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
