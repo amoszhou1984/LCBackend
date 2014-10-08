@@ -13,10 +13,10 @@ namespace LiangchenServer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LCDB2Entities : DbContext
+    public partial class LCAuthDBEntities : DbContext
     {
-        public LCDB2Entities()
-            : base("name=LCDB2Entities")
+        public LCAuthDBEntities()
+            : base("name=LCAuthDBEntities")
         {
         }
     
@@ -25,12 +25,8 @@ namespace LiangchenServer
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<LCAddress> LCAddresses { get; set; }
-        public DbSet<LCCountry> LCCountries { get; set; }
-        public DbSet<LCEvent> LCEvents { get; set; }
-        public DbSet<LCEventCreation> LCEventCreations { get; set; }
-        public DbSet<LCParticipation> LCParticipations { get; set; }
-        public DbSet<LCStateProvince> LCStateProvinces { get; set; }
-        public DbSet<LCUser> LCUsers { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

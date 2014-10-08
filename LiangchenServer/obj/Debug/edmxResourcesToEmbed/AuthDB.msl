@@ -1,22 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="LCAuthDBModelStoreContainer" CdmEntityContainer="LCAuthDBEntities">
-    <EntitySetMapping Name="LCUsers">
-      <EntityTypeMapping TypeName="LCAuthDBModel.LCUser">
-        <MappingFragment StoreEntitySet="LCUser">
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LCUserPools">
-      <EntityTypeMapping TypeName="LCAuthDBModel.LCUserPool">
-        <MappingFragment StoreEntitySet="LCUserPool">
-          <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+    <EntitySetMapping Name="Sessions">
+      <EntityTypeMapping TypeName="LCAuthDBModel.Session">
+        <MappingFragment StoreEntitySet="Sessions">
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="SessionID" ColumnName="SessionID" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -29,6 +21,14 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="LCAuthDBModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

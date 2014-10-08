@@ -1,22 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="LCAuthDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="LCAuthDBModelStoreContainer">
-    <EntitySet Name="LCUser" EntityType="LCAuthDBModel.Store.LCUser" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LCUserPool" EntityType="LCAuthDBModel.Store.LCUserPool" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sessions" EntityType="LCAuthDBModel.Store.Sessions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="sysdiagrams" EntityType="LCAuthDBModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="LCAuthDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LCUserPool_LCUser" Association="LCAuthDBModel.Store.FK_LCUserPool_LCUser">
-      <End Role="LCUser" EntitySet="LCUser" />
-      <End Role="LCUserPool" EntitySet="LCUserPool" />
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Sessions" EntitySet="Sessions" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="LCUser">
-    <Key>
-      <PropertyRef Name="Email" />
-    </Key>
-    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
-  </EntityType>
-  <EntityType Name="LCUserPool">
+  <EntityType Name="Sessions">
     <Key>
       <PropertyRef Name="Email" />
       <PropertyRef Name="SessionID" />
@@ -24,7 +17,7 @@
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="SessionID" Type="int" Nullable="false" />
     <Property Name="StartTime" Type="datetime" Nullable="false" />
-    <Property Name="IP" Type="nchar" Nullable="false" MaxLength="15" />
+    <Property Name="IP" Type="nvarchar" Nullable="false" MaxLength="15" />
     <Property Name="AccessToken" Type="nchar" Nullable="false" MaxLength="10" />
     <Property Name="Duration" Type="int" Nullable="false" />
   </EntityType>
@@ -38,14 +31,21 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
   <Association Name="FK_LCUserPool_LCUser">
-    <End Role="LCUser" Type="LCAuthDBModel.Store.LCUser" Multiplicity="1" />
-    <End Role="LCUserPool" Type="LCAuthDBModel.Store.LCUserPool" Multiplicity="*" />
+    <End Role="Users" Type="LCAuthDBModel.Store.Users" Multiplicity="1" />
+    <End Role="Sessions" Type="LCAuthDBModel.Store.Sessions" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="LCUser">
+      <Principal Role="Users">
         <PropertyRef Name="Email" />
       </Principal>
-      <Dependent Role="LCUserPool">
+      <Dependent Role="Sessions">
         <PropertyRef Name="Email" />
       </Dependent>
     </ReferentialConstraint>

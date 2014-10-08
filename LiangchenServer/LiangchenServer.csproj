@@ -75,112 +75,116 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuthDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuthDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AuthDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuthDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="EventModel.cs" />
     <Compile Include="LCAddress.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LCAuth.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LCAuth.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LCAuth.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LCAuth.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LCAuth.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LCAuth.edmx</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LCCountry.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
-    <Compile Include="LCDB.Context.cs">
+    <Compile Include="LCDB2.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LCDB.Context.tt</DependentUpon>
+      <DependentUpon>LCDB2.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="LCDB.cs">
+    <Compile Include="LCDB2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
-    <Compile Include="LCDB.Designer.cs">
+    <Compile Include="LCDB2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LCDB.edmx</DependentUpon>
+      <DependentUpon>LCDB2.edmx</DependentUpon>
     </Compile>
     <Compile Include="LCEvent.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LCEventCreation.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LCParticipation.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LCPostModel.cs" />
     <Compile Include="LCStateProvince.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LCUser.cs">
-      <DependentUpon>LCDB.tt</DependentUpon>
+      <DependentUpon>LCDB2.tt</DependentUpon>
     </Compile>
     <Compile Include="LiangChen.svc.cs">
       <DependentUpon>LiangChen.svc</DependentUpon>
     </Compile>
     <Compile Include="ILiangChenServices.cs" />
-    <Compile Include="UserModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs">
-      <DependentUpon>LCAuth.tt</DependentUpon>
+      <DependentUpon>AuthDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>AuthDB.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>LCAuth.tt</DependentUpon>
+      <DependentUpon>AuthDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <EntityDeploy Include="LCAuth.edmx">
+    <EntityDeploy Include="AuthDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LCAuth.Designer.cs</LastGenOutput>
+      <LastGenOutput>AuthDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="LCAuth.Context.tt">
+    <Content Include="AuthDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCAuth.edmx</DependentUpon>
-      <LastGenOutput>LCAuth.Context.cs</LastGenOutput>
+      <DependentUpon>AuthDB.edmx</DependentUpon>
+      <LastGenOutput>AuthDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="LCAuth.edmx.diagram">
-      <DependentUpon>LCAuth.edmx</DependentUpon>
+    <Content Include="AuthDB.edmx.diagram">
+      <DependentUpon>AuthDB.edmx</DependentUpon>
     </Content>
-    <Content Include="LCAuth.tt">
+    <Content Include="AuthDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCAuth.edmx</DependentUpon>
-      <LastGenOutput>LCAuth.cs</LastGenOutput>
+      <DependentUpon>AuthDB.edmx</DependentUpon>
+      <LastGenOutput>AuthDB.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="LCDB.edmx">
+    <EntityDeploy Include="LCDB2.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LCDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>LCDB2.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="LCDB.Context.tt">
+    <Content Include="LCDB2.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCDB.edmx</DependentUpon>
-      <LastGenOutput>LCDB.Context.cs</LastGenOutput>
+      <DependentUpon>LCDB2.edmx</DependentUpon>
+      <LastGenOutput>LCDB2.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="LCDB.edmx.diagram">
-      <DependentUpon>LCDB.edmx</DependentUpon>
+    <Content Include="LCDB2.edmx.diagram">
+      <DependentUpon>LCDB2.edmx</DependentUpon>
     </Content>
-    <Content Include="LCDB.tt">
+    <Content Include="LCDB2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LCDB.edmx</DependentUpon>
-      <LastGenOutput>LCDB.cs</LastGenOutput>
+      <DependentUpon>LCDB2.edmx</DependentUpon>
+      <LastGenOutput>LCDB2.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\LiangchenServer.pubxml" />
+    <None Include="Properties\PublishProfiles\localserver.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,23 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="LCAuthDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="LCAuthDBEntities" p1:LazyLoadingEnabled="true">
-    <EntitySet Name="LCUsers" EntityType="LCAuthDBModel.LCUser" />
-    <EntitySet Name="LCUserPools" EntityType="LCAuthDBModel.LCUserPool" />
+    <EntitySet Name="Sessions" EntityType="LCAuthDBModel.Session" />
     <EntitySet Name="sysdiagrams" EntityType="LCAuthDBModel.sysdiagram" />
+    <EntitySet Name="Users" EntityType="LCAuthDBModel.User" />
     <AssociationSet Name="FK_LCUserPool_LCUser" Association="LCAuthDBModel.FK_LCUserPool_LCUser">
-      <End Role="LCUser" EntitySet="LCUsers" />
-      <End Role="LCUserPool" EntitySet="LCUserPools" />
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Sessions" EntitySet="Sessions" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="LCUser">
-    <Key>
-      <PropertyRef Name="Email" />
-    </Key>
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="LCUserPools" Relationship="LCAuthDBModel.FK_LCUserPool_LCUser" FromRole="LCUser" ToRole="LCUserPool" />
-  </EntityType>
-  <EntityType Name="LCUserPool">
+  <EntityType Name="Session">
     <Key>
       <PropertyRef Name="Email" />
       <PropertyRef Name="SessionID" />
@@ -25,10 +17,10 @@
     <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="SessionID" Type="Int32" Nullable="false" />
     <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IP" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="true" />
+    <Property Name="IP" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
     <Property Name="Duration" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="LCUser" Relationship="LCAuthDBModel.FK_LCUserPool_LCUser" FromRole="LCUserPool" ToRole="LCUser" />
-    <Property Type="String" Name="AccessToken" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="LCAuthDBModel.FK_LCUserPool_LCUser" FromRole="Sessions" ToRole="Users" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -40,14 +32,22 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Sessions" Relationship="LCAuthDBModel.FK_LCUserPool_LCUser" FromRole="Users" ToRole="Sessions" />
+  </EntityType>
   <Association Name="FK_LCUserPool_LCUser">
-    <End Role="LCUser" Type="LCAuthDBModel.LCUser" Multiplicity="1" />
-    <End Role="LCUserPool" Type="LCAuthDBModel.LCUserPool" Multiplicity="*" />
+    <End Role="Users" Type="LCAuthDBModel.User" Multiplicity="1" />
+    <End Role="Sessions" Type="LCAuthDBModel.Session" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="LCUser">
+      <Principal Role="Users">
         <PropertyRef Name="Email" />
       </Principal>
-      <Dependent Role="LCUserPool">
+      <Dependent Role="Sessions">
         <PropertyRef Name="Email" />
       </Dependent>
     </ReferentialConstraint>

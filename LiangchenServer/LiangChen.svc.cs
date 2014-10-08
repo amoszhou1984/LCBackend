@@ -15,7 +15,6 @@ namespace LiangchenServer
 {
     public class LiangChenServices : ILiangChenServices
     {
-        private LCAuthDBEntities authDbEntities = new LCAuthDBEntities();
         private LCDB2Entities dbEntities = new LCDB2Entities();
         public string Echo(string message)
         {
@@ -23,41 +22,77 @@ namespace LiangchenServer
         }
 
 
-        public bool Login(Stream loginData)
+        public string Login(Stream loginData)
         {
             // convert Stream Data to StreamReader
             var reader = new StreamReader(loginData);
             string content = reader.ReadToEnd();
-            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(content);
+            LCPostModel postDataModel = JsonConvert.DeserializeObject<LCPostModel>(content);
+            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(postDataModel.ContentData);
 
-            using (authDbEntities)
+            using (var authDbEntities = new LCAuthDBEntities())
             {
                 // Find the user from the AuthDB
                 string name = userModel.email;
                 User user = authDbEntities.Users.FirstOrDefault(u => u.Email == name);
-                if (user == null) return false;
+                if (user == null) return null;
                 if (user.Password != userModel.password)
                 {
-                    return false;
+                    return null;
                 }
                 else
                 {
+                    Session session = authDbEntities.Sessions.FirstOrDefault(u => u.Email == name);
+                    if (session != null) return null;
+                    string token = generateToken();
+                    string ip = getIP();
                     // Add the user to the user pool
                     Session entry = new Session()
                     {
                         Email = name,
                         SessionID = 0,
                         StartTime = DateTime.Now,
-                        IP = "tempfakeddata",
-                        AccessToken = "fakedtoken",
+                        IP = ip,
+                        AccessToken = token,
                         Duration = 60
                     };
                     authDbEntities.Sessions.Add(entry);
                     authDbEntities.SaveChanges();
-                    return true;
+                    return token;
                 }
 
             }
+        }
+
+        public bool Logout(Stream userData)
+        {
+            // First validate the user priviledges
+            var reader = new StreamReader(userData);
+            string content = reader.ReadToEnd();
+            LCPostModel postDataModel = JsonConvert.DeserializeObject<LCPostModel>(content);
+            if (validateUser(postDataModel) == false) return false;
+            IEnumerable<Session> sessions;
+            using (var authDbEntities = new LCAuthDBEntities())
+            {
+                // Find the user from the AuthDB
+                string userEmail = postDataModel.Email;
+                sessions = authDbEntities.Sessions.Where(s => s.Email == userEmail);
+                foreach (var s in sessions)
+                    authDbEntities.Sessions.Remove(s);
+                authDbEntities.SaveChanges();
+                return true;
+            }
+
+        }
+
+        private string getIP()
+        {
+            return "0.0.0.0";
+        }
+
+        private string generateToken()
+        {
+            return "fakedToken";
         }
 
         public string Join(Stream data)
@@ -65,11 +100,12 @@ namespace LiangchenServer
             // convert Stream Data to StreamReader
             var reader = new StreamReader(data);
             string content = reader.ReadToEnd();
-            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(content);
+            LCPostModel postModel = JsonConvert.DeserializeObject<LCPostModel>(content);
+            UserModel userModel = JsonConvert.DeserializeObject<UserModel>(postModel.ContentData);
 
             // Check if the user email already exists
             User user = null;
-            using (authDbEntities)
+            using (var authDbEntities = new LCAuthDBEntities())
             {
                 user = authDbEntities.Users.FirstOrDefault(u => u.Email == userModel.email);
 
@@ -156,7 +192,7 @@ namespace LiangchenServer
 
         private bool validateUser(LCPostModel postDataModel)
         {
-            using (authDbEntities)
+            using (var authDbEntities = new LCAuthDBEntities())
             {
                 Session entry = authDbEntities.Sessions.FirstOrDefault(e => e.Email == postDataModel.Email
                     && e.AccessToken == postDataModel.AccessToken);
@@ -194,7 +230,8 @@ namespace LiangchenServer
             if (validateUser(postDataModel) == false) return null;
             else
             {
-                int eventId = JsonConvert.DeserializeObject<int>(postDataModel.ContentData);
+                EventModel eventModel = JsonConvert.DeserializeObject<EventModel>(postDataModel.ContentData);
+                int eventId = eventModel.EventId;
                 LCEvent theEvent = dbEntities.LCEvents.FirstOrDefault(e => e.EventId == eventId);
                 if (theEvent == null) return null;
                 LCAddress address = theEvent.LCAddress;

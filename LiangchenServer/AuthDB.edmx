@@ -22,7 +22,7 @@
           <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="SessionID" Type="int" Nullable="false" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
-          <Property Name="IP" Type="nchar" Nullable="false" MaxLength="15" />
+          <Property Name="IP" Type="nvarchar" Nullable="false" MaxLength="15" />
           <Property Name="AccessToken" Type="nchar" Nullable="false" MaxLength="10" />
           <Property Name="Duration" Type="int" Nullable="false" />
         </EntityType>
@@ -77,7 +77,7 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="SessionID" Type="Int32" Nullable="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IP" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="true" />
+          <Property Name="IP" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
           <Property Name="AccessToken" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="LCAuthDBModel.FK_LCUserPool_LCUser" FromRole="Sessions" ToRole="Users" />

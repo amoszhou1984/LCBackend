@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="LCAuthDBEntities-Web.config Connection String" description="LCAuthDBEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/AuthDB.csdl|res://*/AuthDB.ssdl|res://*/AuthDB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=localhost;initial catalog=LCAuthDB;user id=sa;password=OOll2233!;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Amos\\documents\\visual\ studio\ 2012\\Projects\\LiangchenServer\\LiangchenServer\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='LCAuthDBEntities']/@connectionString" />
+  </parameter>
+  <parameter name="LCDB2Entities-Web.config Connection String" description="LCDB2Entities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/LCDB2.csdl|res://*/LCDB2.ssdl|res://*/LCDB2.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=localhost;initial catalog=LCDB2;user id=sa;password=OOll2233!;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Amos\\documents\\visual\ studio\ 2012\\Projects\\LiangchenServer\\LiangchenServer\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='LCDB2Entities']/@connectionString" />
+  </parameter>
+</parameters>

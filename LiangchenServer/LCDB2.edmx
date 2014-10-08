@@ -13,6 +13,7 @@
           <EntitySet Name="LCParticipation" EntityType="LCDB2Model.Store.LCParticipation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LCStateProvince" EntityType="LCDB2Model.Store.LCStateProvince" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LCUser" EntityType="LCDB2Model.Store.LCUser" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="LCDB2Model.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_LCAddress_LCStateProvince" Association="LCDB2Model.Store.FK_LCAddress_LCStateProvince">
             <End Role="LCStateProvince" EntitySet="LCStateProvince" />
             <End Role="LCAddress" EntitySet="LCAddress" />
@@ -108,6 +109,16 @@
           <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_LCAddress_LCStateProvince">
           <End Role="LCStateProvince" Type="LCDB2Model.Store.LCStateProvince" Multiplicity="1" />
@@ -206,6 +217,7 @@
           <EntitySet Name="LCParticipations" EntityType="LCDB2Model.LCParticipation" />
           <EntitySet Name="LCStateProvinces" EntityType="LCDB2Model.LCStateProvince" />
           <EntitySet Name="LCUsers" EntityType="LCDB2Model.LCUser" />
+          <EntitySet Name="sysdiagrams" EntityType="LCDB2Model.sysdiagram" />
           <AssociationSet Name="FK_LCAddress_LCStateProvince" Association="LCDB2Model.FK_LCAddress_LCStateProvince">
             <End Role="LCStateProvince" EntitySet="LCStateProvinces" />
             <End Role="LCAddress" EntitySet="LCAddresses" />
@@ -315,6 +327,16 @@
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="LCEventCreations" Relationship="LCDB2Model.FK_LCEventCreation_LCUser" FromRole="LCUser" ToRole="LCEventCreation" />
           <NavigationProperty Name="LCParticipations" Relationship="LCDB2Model.FK_LCParticipation_LCUser" FromRole="LCUser" ToRole="LCParticipation" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_LCAddress_LCStateProvince">
           <End Role="LCStateProvince" Type="LCDB2Model.LCStateProvince" Multiplicity="1" />
@@ -475,6 +497,17 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LCDB2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
