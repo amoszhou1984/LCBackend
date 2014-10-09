@@ -63,6 +63,11 @@ namespace LiangchenServer
         [WebInvoke(Method = "POST", UriTemplate = "Event/Detail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         string EventDetail(Stream requestData);
 
+        //E.g. http://liangchenapp.com:808/LiangChen.svc/Event/Vote
+        [OperationContract(Name = "EventVote")]
+        [WebInvoke(Method = "POST", UriTemplate = "Event/Vote", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        string EventVote(Stream requestData);
+
         [OperationContract(Name = "AddParticipant")]
         [WebInvoke(Method = "POST", UriTemplate = "Participant/Add", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         bool AddParticipant(Stream participantData);

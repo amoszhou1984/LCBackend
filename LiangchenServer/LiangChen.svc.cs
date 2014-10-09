@@ -15,6 +15,8 @@ namespace LiangchenServer
 {
     public class LiangChenServices : ILiangChenServices
     {
+        private string baseURI = "http://liangchenapp.com:808/";
+        private int port = 808;
         private LCDB2Entities dbEntities = new LCDB2Entities();
         public string Echo(string message)
         {
@@ -169,7 +171,8 @@ namespace LiangchenServer
                     TimeSlots = anEvent.TimeSlot,
                     Title = anEvent.Title,
                     Description = anEvent.Description,
-                    AddressID = addressToAdd.AddressID
+                    AddressID = addressToAdd.AddressID,
+                    EventGUID = Guid.NewGuid().ToString()
                 };
                 dbEntities.LCEvents.Add(eventToAdd);
                 dbEntities.SaveChanges();
@@ -248,6 +251,23 @@ namespace LiangchenServer
                     CountryRegionCode = (address == null ? null : address.LCStateProvince.CountryRegionCode)
                 };
                 return JsonConvert.SerializeObject(eventDetails);
+            }
+        }
+
+        public string EventVote(Stream requestData)
+        {
+            var reader = new StreamReader(requestData);
+            string content = reader.ReadToEnd();
+            LCPostModel postDataModel = JsonConvert.DeserializeObject<LCPostModel>(content);
+            if (validateUser(postDataModel) == false) return null;
+            else
+            {
+                EventModel eventModel = JsonConvert.DeserializeObject<EventModel>(postDataModel.ContentData);
+                int eventId = eventModel.EventId;
+                LCEvent theEvent = dbEntities.LCEvents.FirstOrDefault(e => e.EventId == eventId);
+                if (theEvent == null) return null;
+                string url = baseURI +"/event/vote/"+ theEvent.EventGUID;
+                return JsonConvert.SerializeObject(url);
             }
         }
 

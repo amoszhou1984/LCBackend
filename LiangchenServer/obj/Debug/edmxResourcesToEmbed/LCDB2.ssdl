@@ -66,6 +66,7 @@
     <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="AddressID" Type="int" />
+    <Property Name="EventGUID" Type="nchar" MaxLength="36" />
   </EntityType>
   <EntityType Name="LCEventCreation">
     <Key>

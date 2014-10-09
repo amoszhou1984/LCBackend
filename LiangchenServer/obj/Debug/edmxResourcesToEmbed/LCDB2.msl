@@ -30,6 +30,7 @@
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="EventGUID" ColumnName="EventGUID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

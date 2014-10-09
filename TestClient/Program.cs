@@ -60,7 +60,7 @@ namespace TestClient
 
         public static EventModel eventModelDetail = new EventModel()
         {
-            EventId = 4
+            EventId = 2002
         };
 
 
@@ -74,22 +74,24 @@ namespace TestClient
             string retVal = null;
             //string uri = "liangchenapp.com:808";
             string uri = "localhost:2099";
-            retVal = SendJoinRequest("http://" + uri + "/LiangChen.svc/User/Join", "Join request");
-            Console.WriteLine(retVal);
+            //retVal = SendJoinRequest("http://" + uri + "/LiangChen.svc/User/Join", "Join request");
+            //Console.WriteLine(retVal);
             retVal = SendLoginRequest("http://" + uri + "/LiangChen.svc/User/Login", "Login request");
             Console.WriteLine(retVal);
-            retVal = SendLogoutRequest("http://" + uri + "/LiangChen.svc/User/Logout", "Logout request");
-            Console.WriteLine(retVal);
-            retVal = SendCreatEventRequest("http://" + uri + "/LiangChen.svc/Event/Create", "Create request");
-            Console.WriteLine(retVal);
-            retVal = SendLoginRequest("http://" + uri + "/LiangChen.svc/User/Login", "Login request");
-            Console.WriteLine(retVal);
-            retVal = SendCreatEventRequest("http://" + uri + "/LiangChen.svc/Event/Create", "Create request");
-            Console.WriteLine(retVal);
-            retVal = SendListEventRequest("http://" + uri + "/LiangChen.svc/Event/ListCreated", "ListEvent request");
-            Console.WriteLine(retVal);
-            retVal = SendEventDetailRequest("http://" + uri + "/LiangChen.svc/Event/Detail", "GetEventDetail request");
-            Console.WriteLine(retVal);
+            //retVal = SendLogoutRequest("http://" + uri + "/LiangChen.svc/User/Logout", "Logout request");
+            //Console.WriteLine(retVal);
+            //retVal = SendCreatEventRequest("http://" + uri + "/LiangChen.svc/Event/Create", "Create request");
+            //Console.WriteLine(retVal);
+            //retVal = SendLoginRequest("http://" + uri + "/LiangChen.svc/User/Login", "Login request");
+            //Console.WriteLine(retVal);
+            //retVal = SendCreatEventRequest("http://" + uri + "/LiangChen.svc/Event/Create", "Create request");
+            //Console.WriteLine(retVal);
+            //retVal = SendListEventRequest("http://" + uri + "/LiangChen.svc/Event/ListCreated", "ListEvent request");
+            //Console.WriteLine(retVal);
+            //retVal = SendEventDetailRequest("http://" + uri + "/LiangChen.svc/Event/Detail", "GetEventDetail request");
+            //Console.WriteLine(retVal);
+            retVal = SendEventVoteRequest("http://" + uri + "/LiangChen.svc/Event/Vote", "GetEventVotePage request");
+            Console.WriteLine(JsonConvert.DeserializeObject(retVal));
             retVal = SendEventEditRequest("http://" + uri + "/LiangChen.svc/Event/Edit", "Edit content");
             Console.WriteLine(retVal);
             retVal = SendListEventRequest("http://" + uri + "/LiangChen.svc/Event/ListCreated", "ListEvent request");
@@ -101,6 +103,27 @@ namespace TestClient
             retVal = SendListEventRequest("http://"+uri+"/LiangChen.svc/Event/ListCreated", "ListEvent request");
             Console.WriteLine(retVal);
             return 0;
+        }
+
+        private static string SendEventVoteRequest(string URI, string Parameters)
+        {
+            System.Net.WebRequest req = System.Net.WebRequest.Create(URI);
+            req.ContentType = "json";
+            req.Method = "POST";
+            LCPostModel detailReq = new LCPostModel();
+            detailReq.Email = "sirenyao@gmail.com";
+            detailReq.AccessToken = "fakedtoken";
+            detailReq.ContentData = JsonConvert.SerializeObject(eventModelDetail);
+            Parameters = JsonConvert.SerializeObject(detailReq);
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Parameters);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length); //Push it out there
+            os.Close();
+            System.Net.WebResponse resp = req.GetResponse();
+            if (resp == null) return null;
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            return sr.ReadToEnd().Trim();
         }
 
         private static string SendLogoutRequest(string URI, string Parameters)
@@ -155,7 +178,7 @@ namespace TestClient
             req.Method = "POST";
             //We need to count how many bytes we're sending. Post'ed Faked Forms should be name=value&
             LCPostModel postModel = new LCPostModel();
-            postModel.Email = "amoszhou@gmail.com";
+            postModel.Email = "sirenyao@gmail.com";
             postModel.AccessToken = "fakedtoken";
             postModel.ContentData = JsonConvert.SerializeObject(eventModelNew);
             Parameters = JsonConvert.SerializeObject(postModel);

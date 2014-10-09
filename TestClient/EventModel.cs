@@ -21,5 +21,6 @@ namespace LiangchenServer
         public string StateProvinceCode { get; set; }
         // Use country code, e.g. CHN, AU
         public string CountryRegionCode { get; set; }
+        public string EventGUID { get; set; }
     }
 }

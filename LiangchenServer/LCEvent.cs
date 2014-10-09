@@ -25,6 +25,7 @@ namespace LiangchenServer
         public string Title { get; set; }
         public string Description { get; set; }
         public Nullable<int> AddressID { get; set; }
+        public string EventGUID { get; set; }
     
         public virtual LCAddress LCAddress { get; set; }
         public virtual ICollection<LCEventCreation> LCEventCreations { get; set; }

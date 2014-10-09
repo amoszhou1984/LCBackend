@@ -69,6 +69,7 @@
     <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="AddressID" Type="Int32" />
+    <Property Name="EventGUID" Type="String" MaxLength="36" Unicode="true" FixedLength="true" />
     <NavigationProperty Name="LCAddress" Relationship="LCDB2Model.FK_LCEvent_LCAddress" FromRole="LCEvent" ToRole="LCAddress" />
     <NavigationProperty Name="LCEventCreations" Relationship="LCDB2Model.FK_LCEventCreation_LCEvent" FromRole="LCEvent" ToRole="LCEventCreation" />
     <NavigationProperty Name="LCParticipations" Relationship="LCDB2Model.FK_LCParticipation_LCEvent" FromRole="LCEvent" ToRole="LCParticipation" />
