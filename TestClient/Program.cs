@@ -60,7 +60,7 @@ namespace TestClient
 
         public static EventModel eventModelDetail = new EventModel()
         {
-            EventId = 2002
+            EventId = 1
         };
 
 
@@ -72,8 +72,8 @@ namespace TestClient
         static int Main(string[] args)
         {
             string retVal = null;
-            //string uri = "liangchenapp.com:808";
-            string uri = "localhost:2099";
+            string uri = "liangchenapp.com:808";
+            //string uri = "localhost:2099";
             //retVal = SendJoinRequest("http://" + uri + "/LiangChen.svc/User/Join", "Join request");
             //Console.WriteLine(retVal);
             retVal = SendLoginRequest("http://" + uri + "/LiangChen.svc/User/Login", "Login request");
@@ -90,12 +90,12 @@ namespace TestClient
             //Console.WriteLine(retVal);
             //retVal = SendEventDetailRequest("http://" + uri + "/LiangChen.svc/Event/Detail", "GetEventDetail request");
             //Console.WriteLine(retVal);
-            retVal = SendEventVoteRequest("http://" + uri + "/LiangChen.svc/Event/Vote", "GetEventVotePage request");
-            Console.WriteLine(JsonConvert.DeserializeObject(retVal));
-            retVal = SendEventEditRequest("http://" + uri + "/LiangChen.svc/Event/Edit", "Edit content");
-            Console.WriteLine(retVal);
-            retVal = SendListEventRequest("http://" + uri + "/LiangChen.svc/Event/ListCreated", "ListEvent request");
-            Console.WriteLine(retVal);
+            //retVal = SendEventVoteRequest("http://" + uri + "/LiangChen.svc/Event/Vote", "GetEventVotePage request");
+            //Console.WriteLine(JsonConvert.DeserializeObject(retVal));
+            //retVal = SendEventEditRequest("http://" + uri + "/LiangChen.svc/Event/Edit", "Edit content");
+            //Console.WriteLine(retVal);
+            //retVal = SendListEventRequest("http://" + uri + "/LiangChen.svc/Event/ListCreated", "ListEvent request");
+            //Console.WriteLine(retVal);
             retVal = SendEventDetailRequest("http://" + uri + "/LiangChen.svc/Event/Detail", "GetEventDetail request");
             Console.WriteLine(retVal);
             retVal = SendEventDelRequest("http://"+uri+"/LiangChen.svc/Event/Delete", "EventDelete request");
@@ -245,7 +245,7 @@ namespace TestClient
             req.ContentType = "json";
             req.Method = "POST";
             LCPostModel detailReq = new LCPostModel();
-            detailReq.Email = "amoszhou@gmail.com";
+            detailReq.Email = "sirenyao@gmail.com";
             detailReq.AccessToken = "fakedtoken";
             detailReq.ContentData = JsonConvert.SerializeObject(eventModelDetail);
             Parameters = JsonConvert.SerializeObject(detailReq);

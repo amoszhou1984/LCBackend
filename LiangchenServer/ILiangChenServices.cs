@@ -41,7 +41,7 @@ namespace LiangchenServer
         //E.g. http://liangchenapp.com:808/LiangChen.svc/Event/Create
         [OperationContract(Name = "CreateEvent")]
         [WebInvoke(Method = "POST", UriTemplate = "Event/Create", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        bool CreateEvent(Stream eventData);
+        string CreateEvent(Stream eventData);
 
         //E.g. http://liangchenapp.com:808/LiangChen.svc/Event/Edit
         [OperationContract(Name = "EditEvent")]

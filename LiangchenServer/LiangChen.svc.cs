@@ -137,13 +137,13 @@ namespace LiangchenServer
             return "Registration Successful!";
         }
 
-        public bool CreateEvent(Stream eventData)
+        public string CreateEvent(Stream eventData)
         {
             // First validate the user priviledges
             var reader = new StreamReader(eventData);
             string content = reader.ReadToEnd();
             LCPostModel postDataModel = JsonConvert.DeserializeObject<LCPostModel>(content);
-            if (validateUser(postDataModel) == false) return false;
+            if (validateUser(postDataModel) == false) return null;
             using (dbEntities)
             {
                 // Create Event
@@ -152,7 +152,7 @@ namespace LiangchenServer
                 LCStateProvince stateProvince =
                     dbEntities.LCStateProvinces.FirstOrDefault(p => p.StateProvinceCode == anEvent.StateProvinceCode
                         && p.CountryRegionCode == anEvent.CountryRegionCode);
-                if (stateProvince == null) return false;
+                if (stateProvince == null) return null;
                 LCAddress addressToAdd = new LCAddress()
                 {
                     AddressLine1 = anEvent.AddressLine1,
@@ -180,7 +180,7 @@ namespace LiangchenServer
                 // Link the creator to the event
                 //We've checked this user is in the authdb, thereofore should also be in the transactional db
                 var creator = dbEntities.LCUsers.FirstOrDefault(u => u.Email == postDataModel.Email);
-                if (creator == null) return false;
+                if (creator == null) return null;
                 LCEventCreation creation = new LCEventCreation()
                 {
                     EventId = eventToAdd.EventId,
@@ -189,8 +189,10 @@ namespace LiangchenServer
                 };
                 dbEntities.LCEventCreations.Add(creation);
                 dbEntities.SaveChanges();
+                string url = baseURI + "/event/vote/" + eventToAdd.EventGUID;
+                return JsonConvert.SerializeObject(url);
             }
-            return false;
+            return null;
         }
 
         private bool validateUser(LCPostModel postDataModel)
@@ -247,10 +249,11 @@ namespace LiangchenServer
                     AddressLine1 = (address == null ? null : address.AddressLine1),
                     AddressLine2 = (address == null ? null : address.AddressLine2),
                     City = (address == null ? null : address.City),
-                    StateProvinceCode = (address == null ? null : address.LCStateProvince.StateProvinceCode),
-                    CountryRegionCode = (address == null ? null : address.LCStateProvince.CountryRegionCode)
+                    StateProvinceCode = (address == null ? null : address.LCStateProvince.StateProvinceCode.Trim()),
+                    CountryRegionCode = (address == null ? null : address.LCStateProvince.CountryRegionCode.Trim())
                 };
-                return JsonConvert.SerializeObject(eventDetails);
+                var str = JsonConvert.SerializeObject(eventDetails);
+                return str;
             }
         }
 
